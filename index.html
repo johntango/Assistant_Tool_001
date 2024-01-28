@@ -79,12 +79,10 @@
           var span = document.createElement("span");
 
           // check if item.content or item.function
-
-          if (item.content !== null) {
-            span.textContent = item.content;
-          }
-          if (item.function !== null) {
-            span.textContent = item.function;
+          span.textContent = item.content;
+          // check if item.function exists
+          if ("function" in item) {
+            span.textContent = JSON.stringify(item.function);
           }
 
           // Assign color based on the role
@@ -183,6 +181,14 @@
           style="width: 100%"
           value="Enter prompt"
         />
+        <button
+          class="btn btn-primary mr-1"
+          type="submit"
+          onclick="sendRequest('create_assistant')"
+        >
+          Create
+        </button>
+        <input type="text" id="assistant_id" name="assistant_id" />
 
         <button
           class="btn btn-primary mr-1"

@@ -1,4 +1,4 @@
-# Run Assistant Mark 0.0.1
+# Run Tool Calling Assistant
 
 jrw@mit.edu (email me if you find issues)
 This version spins up an Assistant with general GPT4 capabilities for teaching purposes

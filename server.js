@@ -47,7 +47,7 @@ app.get('/', (req, res) => {
 //
 // Run 
 app.post('/run_assistant', async (req, res) => {
-    let name = "bland";  // we could get this from req.body
+    let name = "toolassistant";  // we could get this from req.body
     let instructions = req.body.message;
     
     tools = [{ type: "code_interpreter" }, { type: "retrieval" }]
@@ -74,11 +74,21 @@ async function create_or_get_assistant(name){
         let assistant = response.data[obj];
         // change assistant.name to small letters
         if(assistant.name.toLowerCase() == name){
-            assistant_id = assistant.id;
+            focus.assistant_id = assistant.id;
             break
         }
+        if(focus.assistant_id == ""){
+            let response = await openai.beta.assistants.create({
+                name: name,
+                instructions:
+                    `You are a helpful ${name} assistant.::\n\n`,
+                tools: tools,
+                model: "gpt-4-1106-preview",
+            });
+            focus.assistant_id = response.id
+        }
     }
-    return assistant_id
+    return focus.assistant_id
 }
 async function create_or_get_thread(){
     if(focus.thread_id == ""){
@@ -100,24 +110,10 @@ async function create_or_get_thread(){
 // Define routes
 app.post('/create_assistant', async (req, res) => {
     let name = req.body.assistant_name;
-    tools = [{ type: "code_interpreter" }, { type: "retrieval" }]
     try {
-        let response = await openai.beta.assistants.create({
-            name: name,
-            instructions:
-                `You are a helpful ${name} assistant. You will obey instructions and output both the input and your response'::\n\n`,
-            tools: tools,
-            model: "gpt-4-1106-preview",
-        });
-
-        // Log the first greeting
-        console.log(
-            `Hi, I'm a ${response.name} Assistant \n`
-        );
-        focus.assistant_id = response.id;
-        focus.assistant_name = response.name;
-        assistants[response.name] = response;
-        message = `${response.name} Assistant created with id: ${response.id}`;
+        let assistant_id = create_or_get_assistant(name);
+        message = "Assistant created with id: " + assistant_id;
+        focus.assistant_id = assistant_id;
         res.status(200).json({ message: message, focus: focus });
     }
     catch (error) {
