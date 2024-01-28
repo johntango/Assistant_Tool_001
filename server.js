@@ -12,7 +12,7 @@ const sqlite3 = require('sqlite3');
 
 
 let assistants = {}
-let tools = [{ type: "code_interpreter" }, { type: "retrieval" }]
+let tools = [{ role:"function", type: "code_interpreter" }, { role:"function",type: "retrieval" }]
 //const get_weather = require('./functions/get_weather.js');
 const { get } = require('http');
 
@@ -575,17 +575,16 @@ app.post('/list_tools', async (req, res) => {
     let tools = [];
     keys = Object.keys(functions);
     for (let key of keys) {
-        tools.push({ type: "function", function: functions[key].details })
+        tools.push({ role: "function", function: functions[key].details })
     }
 
-    const assistant = await openai.beta.assistants.update(
+    const response = await openai.beta.assistants.update(
         assistant_id,
         { tools: tools }
     )
-    let response = await assistant;
     console.log("assistant tools updated: " + JSON.stringify(response));
-    focus.func_name = "get_weather";
-    res.status(200).json({ message: response, focus: focus });
+    focus.func_name = "crawlDomainGenEmbeds";
+    res.status(200).json({ message: tools, focus: focus });
 })
 
 app.post('/run_function', async (req, res) => {

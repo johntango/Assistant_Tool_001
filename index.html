@@ -78,8 +78,14 @@
           // Create a new span element for each item
           var span = document.createElement("span");
 
-          // Set the text content
-          span.textContent = item.content;
+          // check if item.content or item.function
+
+          if (item.content !== null) {
+            span.textContent = item.content;
+          }
+          if (item.function !== null) {
+            span.textContent = item.function;
+          }
 
           // Assign color based on the role
           switch (item.role) {
@@ -306,7 +312,7 @@
           Get Messages
         </button>
         <input type="text" id="message" name="message" />
-
+      -->
         <label for="func_name" class="label-container">Add Tools:</label>
         <button
           class="btn btn-primary mr-1"
@@ -315,6 +321,7 @@
         >
           Add Tools
         </button>
+        <!--
         <label for="conversation" class="label-container">Conversation:</label>
         <button
           class="btn btn-primary mr-1"
