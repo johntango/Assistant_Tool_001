@@ -59,7 +59,8 @@
       function write_to_div(route, message) {
         // Ensure response is a valid array;
         if (!Array.isArray(message)) {
-          console.error("Response is not an array.");
+          let responseDiv = document.getElementById("response");
+          responseDiv.innerHTML = JSON.stringify(message);
           return;
         }
 
@@ -79,10 +80,12 @@
           var span = document.createElement("span");
 
           // check if item.content or item.function
-          span.textContent = item.content;
+          if ("content" in item) span.textContent = item.content;
           // check if item.function exists
           if ("function" in item) {
             span.textContent = JSON.stringify(item.function);
+          } else {
+            span.textContent = JSON.stringify(item);
           }
 
           // Assign color based on the role
