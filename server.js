@@ -47,10 +47,11 @@ app.get('/', (req, res) => {
 //
 // Run 
 app.post('/run_assistant', async (req, res) => {
-    let name = "toolassistant";  // we could get this from req.body
+    let name = "strategy";  // we could get this from req.body
     let instructions = req.body.message;
-    
+    if(tools.length < 2){
     tools = [{ type: "code_interpreter" }, { type: "retrieval" }]
+    }
     // this puts a message onto a thread and then runs the assistant on that thread
     let run_id;
     let messages = [];  // this accumulates messages from the assistant
@@ -75,18 +76,19 @@ async function create_or_get_assistant(name,instructions){
         // change assistant.name to small letters
         if(assistant.name.toLowerCase() == name){
             focus.assistant_id = assistant.id;
+            tools = assistant.tools;
             break
         }
-        if(focus.assistant_id == ""){
-            let response = await openai.beta.assistants.create({
-                name: name,
-                instructions:
-                    `You are a helpful ${name} assistant.::\n\n`,
-                tools: tools,
-                model: "gpt-4-1106-preview",
-            });
-            focus.assistant_id = response.id
-        }
+    }
+    if(focus.assistant_id == ""){
+        let response = await openai.beta.assistants.create({
+            name: name,
+            instructions:
+                `You are a helpful ${name} assistant.::\n\n`,
+            tools: tools,
+            model: "gpt-4-1106-preview",
+        });
+        focus.assistant_id = response.id
     }
     return focus.assistant_id
 }
@@ -370,6 +372,7 @@ app.post('/run_status', async (req, res) => {
 })
 // requires action is a special case where we need to call a function
 async function get_and_run_tool(response){
+    let thread_id = focus.thread_id;
     // extract function to be called from response
     const toolCalls = response.required_action.submit_tool_outputs.tool_calls;
     let toolOutputs = []
