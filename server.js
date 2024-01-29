@@ -64,7 +64,7 @@ app.post('/run_assistant', async (req, res) => {
     res.status(200).json({ message: messages, focus: focus });
 });
 
-async function create_or_get_assistant(name){
+async function create_or_get_assistant(name,instructions){
     const response = await openai.beta.assistants.list({
         order: "desc",
         limit: 10,
@@ -109,11 +109,13 @@ async function create_or_get_thread(){
 
 // Define routes
 app.post('/create_assistant', async (req, res) => {
-    let name = req.body.assistant_name;
+    tools = [{ type: "code_interpreter" }, { type: "retrieval" }]
+    let instruction = "you are a helpful tool calling assistnt."
     try {
-        let assistant_id = create_or_get_assistant(name);
-        message = "Assistant created with id: " + assistant_id;
+        let assistant_id = await create_or_get_assistant("test assistant",instruction);
+
         focus.assistant_id = assistant_id;
+        message = "Assistant created with id: " + assistant_id;
         res.status(200).json({ message: message, focus: focus });
     }
     catch (error) {
@@ -565,7 +567,7 @@ app.post('/loop', async (req, res) => {
 
 
 app.post('/list_tools', async (req, res) => {
-    let assistant_id = req.body.assistant_id;
+    let assistant_id = focus.assistant_id;
     let functions = await getFunctions();
     // I want to loop over dictionary called functions and create a tools array
     let tools = [];
