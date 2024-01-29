@@ -149,7 +149,6 @@ app.post('/list_assistants', async (req, res) => {
 })
 function extract_assistant_id(data) {
     let assistant_id = "";
-    let tools = []
     if (data.length > 0) {
         assistant_id = data[0].id;
         tools = data[0].tools
@@ -573,7 +572,6 @@ app.post('/list_tools', async (req, res) => {
     let assistant_id = focus.assistant_id;
     let functions = await getFunctions();
     // I want to loop over dictionary called functions and create a tools array
-    let tools = [];
     keys = Object.keys(functions);
     for (let key of keys) {
         tools.push({ role: "function", function: functions[key].details })
