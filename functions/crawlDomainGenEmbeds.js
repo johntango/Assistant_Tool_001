@@ -487,23 +487,23 @@ const execute = async (domain, question)=>{
     return answer
 }
 const details = {
-    name: "crawlDomainGenEmbeds",
-    description: "Given a domain or url to crawl, and a question to answer, it crawls the pages, generates tokens and embeddings, filters the most relevant page and answers the question",
-    parameters: {
-      type: "object",
-      properties: {
-        url: {
-          type: "string",
-          description: "The domain of the url to crawl",
-        },
-        question: {
-            type: "string",
-            description: "The question to answer",
+    "name": "crawlDomainGenEmbeds",
+    "description": "Given a domain or url to crawl, and a question to answer, it crawls the pages, generates tokens and embeddings, filters the most relevant page and answers the question",
+    "parameters": {
+        "type": "object",
+        "properties": {
+            "url": {
+                "type": "string",
+                "description": "The domain of the url to crawl"
             },
-      },
-      required: ["url", "question"],
+            "question": {
+                "type": "string",
+                "description": "The question to answer"
+            }
+        },
+        "required": ["url", "question"]
     },
-    example: "Crawl domain lunarmail.io and answer question 'What are the embeddings that Openai recommends?'",
+    "example": "Crawl domain lunarmail.io and answer question 'What are the embeddings that Openai recommends?'"
 };
 
 module.exports = { execute, details };

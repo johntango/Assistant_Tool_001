@@ -37,20 +37,20 @@ const execute = async (options) => {
     throw error;
   }
 };
-
 const details = {
-    name: "scrape_website",
-    description: "Scrape the HTML of a website",
-    parameters: {
-      type: "object",
-      properties: {
-        url: {
-          type: "string",
-          description: "The URL of the website to scrape the HTML",
-        },
+    "name": "scrape_website",
+    "description": "Scrape the HTML of a website",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "The URL of the website to scrape the HTML"
+        }
       },
-      required: ["url"],
+      "required": ["url"]
     },
-    example: "Scrape the HTML for Google"
+    "example": "Scrape the HTML for Google"
 };
+
 module.exports = { execute, details };

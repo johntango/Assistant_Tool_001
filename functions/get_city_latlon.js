@@ -17,24 +17,25 @@ const execute = async (city) => {
   return {city: city, lat: lat, lon: lon}
 
 }
+
 const details = {
-  name: "get_city_latlon",
-  description: "Given city get the lat, lon location",
-  parameters: {
-    type: "object",
-    properties: {
-      city: {
-        type: "string",
-        description: "The name of the city",
+  "name": "get_city_latlon",
+  "description": "Given city get the lat, lon location",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "city": {
+        "type": "string",
+        "description": "The name of the city"
       },
-      country: {
-        type: "string",
-        description: "Country name'"
-      },
+      "country": {
+        "type": "string",
+        "description": "Country name"
+      }
     },
-    required: ["city"]
+    "required": ["city"]
   },
-  example: "Find the lat/lon of a city with the name 'Tokyo, Japan'",
+  "example": "Find the lat/lon of a city with the name 'Tokyo, Japan'"
 };
 
 module.exports = { execute, details };

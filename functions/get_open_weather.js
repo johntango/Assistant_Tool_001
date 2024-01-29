@@ -22,23 +22,23 @@ const execute = async (city) => {
 
 }
 const details = {
-  name: "get_open_weather",
-  description: "Given city get the weather",
-  parameters: {
-    type: "object",
-    properties: {
-      city: {
-        type: "string",
-        description: "The name of city or country",
+  "name": "get_open_weather",
+  "description": "Given city get the weather",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "city": {
+        "type": "string",
+        "description": "The name of city or country"
       },
-      country: {
-        type: "string",
-        description: "Country name"
-      },
+      "country": {
+        "type": "string",
+        "description": "Country name"
+      }
     },
-    required: ["city"]
+    "required": ["city"]
   },
-  example: "Find the weather of a city with the name 'Tokyo, Japan'",
+  "example": "Find the weather of a city with the name 'Tokyo, Japan'"
 };
-
+ 
 module.exports = { execute, details };

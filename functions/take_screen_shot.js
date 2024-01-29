@@ -45,18 +45,19 @@ const execute = async (url ) => {
 }
 
 const details = {
-    name: "take_screen_shot",
-    description: "Take a screenshot of a website",
-    parameters: {
-      type: "object",
-      properties: {
-        url: {
-          type: "string",
-          description: "The URL of the website to take a screenshot",
-        },
-      },
-      required: ["url"],
+  "name": "take_screen_shot",
+  "description": "Take a screenshot of a website",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "url": {
+        "type": "string",
+        "description": "The URL of the website to take a screenshot"
+      }
     },
-    example: "Take a screenshot of the amazon homepage",
-};
+    "required": ["url"]
+  },
+  "example": "Take a screenshot of the amazon homepage"
+}
+
 module.exports = { execute, details };

@@ -75,22 +75,22 @@ const execute = async (name, instructions) => {
 }
 
 const details = {
-    name: "writer",
-    description: "This is a fiction writer that can write stories based on instructions",
-    parameters: {
-      type: "object",
-      properties: {
-        name: {
-          type: "string",
-          description: "The name of the assistant to use. eg writer",
+    "name": "writer",
+    "description": "This is a fiction writer that can write stories based on instructions",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the assistant to use. eg writer",
         },
-        instructions: {
-          type: "string",
-          description: "The instructions to the assistant. eg Write a story about a dog",
+        "instructions": {
+          "type": "string",
+          "description": "The instructions to the assistant. eg Write a story about a dog",
         },
       },
-      required: ["name", "instructions"],
+      "required": ["name", "instructions"],
     },
-    example: "Get Assistant called Writer and run it with instructions 'Write a story about a dog'",
+    "example": "Get Assistant called Writer and run it with instructions 'Write a story about a dog'",
 };
 module.exports = { execute, details };
